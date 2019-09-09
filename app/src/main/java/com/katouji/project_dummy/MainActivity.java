@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),"Input email and password !",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Incorrect email and password !",Toast.LENGTH_SHORT).show();
                 }
             }
         });
