@@ -72,14 +72,22 @@ public class HomeActivity extends AppCompatActivity {
 
             switch (wifiStateExtra){
                 case WifiManager.WIFI_STATE_ENABLED:
-                    Toast.makeText(getApplicationContext(), "Terhubung...",Toast.LENGTH_SHORT).show();
+                    wifiNyala();
                     break;
                 case WifiManager.WIFI_STATE_DISABLED:
-                    Toast.makeText(getApplicationContext(), "Terputus...",Toast.LENGTH_SHORT).show();
+                    wifiMati();
                     break;
             }
         }
     };
+
+    public void wifiNyala(){
+        Toast.makeText(getApplicationContext(),"WiFi is ONLINE",Toast.LENGTH_SHORT).show();
+    }
+
+    public void wifiMati(){
+        Toast.makeText(getApplicationContext(),"WiFi is OFFLINE",Toast.LENGTH_SHORT).show();
+    }
 
     public void openActivityAbout(){
         Intent intent = new Intent(this, AboutActivity.class);
