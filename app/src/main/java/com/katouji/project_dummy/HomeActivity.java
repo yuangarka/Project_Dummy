@@ -1,12 +1,16 @@
 package com.katouji.project_dummy;
 
 import android.app.NotificationManager;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,6 +25,7 @@ public class HomeActivity extends AppCompatActivity {
     private Button btnAbout;
     private TextView txtUser;
     private WifiManager wifiManager;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +136,28 @@ public class HomeActivity extends AppCompatActivity {
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public void scheduleJob(View v) {
+        ComponentName componentName = new ComponentName(this, MyJobService.class);
+        JobInfo info = new JobInfo.Builder(123, componentName)
+                .setPersisted(true)
+                .setPeriodic(15 * 60 * 1000)
+                .build();
+
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = scheduler.schedule(info);
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.d(TAG, "Job scheduled");
+        } else {
+            Log.d(TAG, "Job scheduling failed");
+        }
+    }
+
+    public void cancelJob(View v) {
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        scheduler.cancel(123);
+        Log.d(TAG, "Job cancelled");
     }
 
 }
