@@ -10,10 +10,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -21,11 +23,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class HomeActivity extends AppCompatActivity {
     private Button btnAbout;
     private TextView txtUser;
     private WifiManager wifiManager;
     private static final String TAG = "MainActivity";
+    public static final long INTERVAL = 3000;
+    private Handler mHandler = new Handler();
+    private Timer mTimer = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,12 +161,35 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             Log.d(TAG, "Job scheduling failed");
         }
+        if (mTimer!=null) {
+            mTimer.cancel();
+        }
+        else
+            mTimer = new Timer();
+
+        mTimer.scheduleAtFixedRate(new TimeDisplayToast(),0,INTERVAL);
     }
 
     public void cancelJob(View v) {
         JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
         scheduler.cancel(123);
         Log.d(TAG, "Job cancelled");
+    }
+
+    private class TimeDisplayToast extends TimerTask {
+
+        @Override
+        public void run() {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(),"3 Detik !", Toast.LENGTH_SHORT).show();
+
+                }
+
+            });
+        }
+
     }
 
 }
