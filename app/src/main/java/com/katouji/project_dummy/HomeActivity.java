@@ -65,6 +65,8 @@ public class HomeActivity extends AppCompatActivity {
             txtUser.setText(getIntent().getStringExtra("dataUsername"));
         }
 
+        
+
     }
 
     @Override
