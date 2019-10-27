@@ -1,6 +1,9 @@
 package com.katouji.project_dummy;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +17,7 @@ public class AboutActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<String> listData;
+    private Button btnDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,14 @@ public class AboutActivity extends AppCompatActivity {
 
         listData = new ArrayList<>();
         setData();
+
+        btnDatabase = (Button) findViewById(R.id.btnDatabase);
+        btnDatabase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivityDatabase();
+            }
+        });
 
         recyclerView = findViewById(R.id.recycleView);
         recyclerView.setHasFixedSize(true);
@@ -38,6 +50,12 @@ public class AboutActivity extends AppCompatActivity {
         listData.add("Data Tiga");
         listData.add("Data Empat");
         listData.add("Data Lima");
+    }
+
+    public void openActivityDatabase(){
+        Intent intent = new Intent(this, DatabaseActivity.class);
+        startActivity(intent);
+
     }
 
 }
