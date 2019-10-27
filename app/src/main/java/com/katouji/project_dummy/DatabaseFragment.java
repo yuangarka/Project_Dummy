@@ -25,6 +25,7 @@ public class DatabaseFragment extends Fragment {
     private EditText isinama;
     private EditText isinohp;
     private Button insert;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v= inflater.inflate(R.layout.activity_database,container,false);
         rv = v.findViewById(R.id.listdb);
